@@ -9,6 +9,7 @@ export async function api(path, options = {}) {
   const data = await res
     .json()
     .catch(() => ({ success: false, message: "Invalid server response" }));
+  if (res.status === 401) window.dispatchEvent(new Event("auth:expired"));
   if (!res.ok) throw new Error(data.message || "Request failed");
   return data.data ?? data;
 }

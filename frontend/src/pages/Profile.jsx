@@ -10,10 +10,12 @@ export default function Profile() {
   const [stats, setStats] = useState(null);
   const [enrollments, setEnrollments] = useState(null);
   useEffect(() => {
-    Promise.all([get("/progress"), get("/enrollments")]).then(([a, b]) => {
-      setStats(a);
-      setEnrollments(b);
-    });
+    Promise.all([get("/progress"), get("/enrollments")])
+      .then(([a, b]) => {
+        setStats(a);
+        setEnrollments(b);
+      })
+      .catch(() => {});
   }, []);
   if (!stats)
     return (

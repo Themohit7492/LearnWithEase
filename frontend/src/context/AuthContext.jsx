@@ -5,6 +5,11 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
+    const handleAuthExpired = () => setUser(null);
+    window.addEventListener("auth:expired", handleAuthExpired);
+    return () => window.removeEventListener("auth:expired", handleAuthExpired);
+  }, []);
+  useEffect(() => {
     get("/auth/me")
       .then(setUser)
       .catch(() => setUser(null))

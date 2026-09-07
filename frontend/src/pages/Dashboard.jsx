@@ -10,10 +10,12 @@ export default function Dashboard() {
   const [data, setData] = useState(null);
   const [enrollments, setEnrollments] = useState([]);
   useEffect(() => {
-    Promise.all([get("/progress"), get("/enrollments")]).then(([a, b]) => {
-      setData(a);
-      setEnrollments(b);
-    });
+    Promise.all([get("/progress"), get("/enrollments")])
+      .then(([a, b]) => {
+        setData(a);
+        setEnrollments(b);
+      })
+      .catch(() => {});
   }, []);
   if (!data)
     return (
