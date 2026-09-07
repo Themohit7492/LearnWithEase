@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Logo from "../components/Logo.jsx";
 import "./AdminChapter.css";
 
-const API_URL = "http://localhost:5000/api";
+const API_URL = "https://learnwitheasebackend.onrender.com/";
 
 export default function AdminChapter() {
   const navigate = useNavigate();

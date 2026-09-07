@@ -1,4 +1,4 @@
-const BASE = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+const BASE = import.meta.env.VITE_API_URL || "https://learnwitheasebackend.onrender.com/";
 export async function api(path, options = {}) {
   const res = await fetch(`${BASE}${path}`, {
     ...options,
