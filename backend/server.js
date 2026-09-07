@@ -39,6 +39,12 @@ app.use("/api/chapters", chapterRoutes);
 app.use("/api/enrollments", enrollmentRoutes);
 app.use("/api/progress", progressRoutes);
 app.use("/api/admin", adminChapterRoutes);
+app.get("/", (req, res) => {
+  res.json({
+    success: true,
+    message: "LearnWithEase API is running "
+  });
+});
 app.use(notFound);
 app.use(errorHandler);
 const port = process.env.PORT || 5000;
