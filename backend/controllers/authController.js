@@ -4,6 +4,9 @@ import Course from "../models/Course.js";
 import { createToken, setAuthCookie } from "../utils/token.js";
 import { isAdminEmail } from "../utils/admin.js";
 
+const isProduction =
+  process.env.NODE_ENV === "production" || process.env.RENDER === "true";
+
 const normalizeEmail = (email = "") => email.trim().toLowerCase();
 
 const serializeUser = (user) => ({
@@ -74,8 +77,8 @@ export const logout = (req, res) => {
   res.cookie("token", "", {
     httpOnly: true,
     expires: new Date(0),
-    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-    secure: process.env.NODE_ENV === "production",
+    sameSite: isProduction ? "none" : "lax",
+    secure: isProduction,
   });
   res.json({ success: true, message: "Logged out" });
 };

@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { get, post, patch } from "../services/api.js";
 const AuthContext = createContext(null);
+const SESSION_KEY = "learnwithease:session";
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -10,23 +11,33 @@ export function AuthProvider({ children }) {
     return () => window.removeEventListener("auth:expired", handleAuthExpired);
   }, []);
   useEffect(() => {
+    if (localStorage.getItem(SESSION_KEY) !== "true") {
+      setLoading(false);
+      return;
+    }
     get("/auth/me")
       .then(setUser)
-      .catch(() => setUser(null))
+      .catch(() => {
+        localStorage.removeItem(SESSION_KEY);
+        setUser(null);
+      })
       .finally(() => setLoading(false));
   }, []);
   const login = async (payload) => {
     const u = await post("/auth/login", payload);
+    localStorage.setItem(SESSION_KEY, "true");
     setUser(u);
     return u;
   };
   const signup = async (payload) => {
     const u = await post("/auth/signup", payload);
+    localStorage.setItem(SESSION_KEY, "true");
     setUser(u);
     return u;
   };
   const logout = async () => {
     await post("/auth/logout");
+    localStorage.removeItem(SESSION_KEY);
     setUser(null);
   };
   const updateLearning = async (payload) => {
