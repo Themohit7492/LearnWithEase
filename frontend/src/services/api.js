@@ -1,4 +1,5 @@
-const BASE = import.meta.env.VITE_API_URL || "https://learnwitheasebackend.onrender.com/";
+const BASE_URL = import.meta.env.VITE_API_URL || "https://learnwitheasebackend.onrender.com";
+const BASE = `${BASE_URL.replace(/\/+$/, "")}/api`;
 export async function api(path, options = {}) {
   const res = await fetch(`${BASE}${path}`, {
     ...options,

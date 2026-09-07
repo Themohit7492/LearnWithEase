@@ -20,7 +20,7 @@ await connectDB();
 const app = express();
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || "https://learnwithease.onrender.com",
+    origin: (process.env.CLIENT_URL || "https://learnwithease.onrender.com").replace(/\/+$/, ""),
     credentials: true,
   }),
 );

@@ -4,7 +4,8 @@ import { useNavigate } from "react-router-dom";
 import Logo from "../components/Logo.jsx";
 import "./AdminChapter.css";
 
-const API_URL = "https://learnwitheasebackend.onrender.com/";
+const API_BASE_URL = import.meta.env.VITE_API_URL || "https://learnwitheasebackend.onrender.com";
+const API_URL = `${API_BASE_URL.replace(/\/+$/, "")}/api`;
 
 export default function AdminChapter() {
   const navigate = useNavigate();
